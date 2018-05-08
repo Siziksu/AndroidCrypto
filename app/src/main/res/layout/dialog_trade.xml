@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding25">
+
+    <TextView
+        android:id="@+id/dialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amount_to_trade_question"
+        android:textSize="@dimen/textSize16"
+        android:textStyle="normal"
+        android:textColor="@color/black"
+        android:labelFor="@+id/dialogAmount" />
+
+    <EditText
+        android:id="@+id/dialogAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogMessage"
+        android:inputType="numberDecimal|numberSigned"
+        android:text="@string/zero"
+        android:maxLength="30"
+        android:textColor="@color/darkGrey"
+        android:selectAllOnFocus="true" />
+
+    <Button
+        android:id="@+id/dialogCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogAmount"
+        android:layout_toStartOf="@+id/dialogTrade"
+        android:layout_marginEnd="@dimen/padding15"
+        android:minWidth="@dimen/padding35"
+        android:background="@null"
+        android:textSize="@dimen/textSize16"
+        android:textColor="@color/colorAccent"
+        android:text="@string/action_cancel" />
+
+    <Button
+        android:id="@+id/dialogTrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogAmount"
+        android:layout_alignParentEnd="true"
+        android:minWidth="@dimen/padding35"
+        android:background="@null"
+        android:textSize="@dimen/textSize16"
+        android:textColor="@color/colorAccent"
+        android:text="@string/action_trade" />
+</RelativeLayout>

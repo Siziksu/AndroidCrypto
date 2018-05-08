@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/portfolioCoinCardView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@color/cardBackground"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardUseCompatPadding="true"
+    tools:ignore="ContentDescription,MissingPrefix">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:background="@color/cardBackground">
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/app_name"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary" />
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinPriceUsdLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/portfolioCoinName"
+                android:text="@string/price_usd"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/textColorSecondary" />
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinPriceUsd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/portfolioCoinName"
+                android:layout_toEndOf="@+id/portfolioCoinPriceUsdLabel"
+                android:text="@string/app_name"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/value" />
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/portfolioCoinPriceUsd"
+                android:text="@string/amount"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/textColorSecondary" />
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/portfolioCoinPriceUsd"
+                android:layout_toEndOf="@+id/portfolioCoinAmountLabel"
+                android:text="@string/app_name"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/positiveChange" />
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinTotalUsdLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/portfolioCoinAmountLabel"
+                android:text="@string/total_price_usd"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/textColorSecondary" />
+
+            <TextView
+                fontPath="fonts/Montserrat-Light.ttf"
+                android:id="@+id/portfolioCoinTotalUsd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/portfolioCoinAmountLabel"
+                android:layout_toEndOf="@+id/portfolioCoinTotalUsdLabel"
+                android:text="@string/app_name"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
