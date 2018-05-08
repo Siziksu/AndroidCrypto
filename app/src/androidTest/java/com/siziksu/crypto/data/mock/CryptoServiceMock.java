@@ -15,6 +15,7 @@ import com.siziksu.crypto.data.client.model.TradeRequest;
 import com.siziksu.crypto.data.client.service.CryptoService;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
 import io.reactivex.Single;
 
 public class CryptoServiceMock implements CryptoService {
@@ -83,7 +84,7 @@ public class CryptoServiceMock implements CryptoService {
 
     @Override
     public Completable addCoinToPortfolio(String authorization, TradeRequest tradeDataModel) {
-        return null;
+        return Completable.create(CompletableEmitter::onComplete);
     }
 
     private String getStringFromFile(String filName) {

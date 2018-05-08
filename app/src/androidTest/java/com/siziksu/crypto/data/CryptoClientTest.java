@@ -4,6 +4,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.siziksu.crypto.data.client.CryptoClient;
 import com.siziksu.crypto.data.client.CryptoClientContract;
+import com.siziksu.crypto.data.client.model.TradeRequest;
 import com.siziksu.crypto.data.mock.CryptoServiceMock;
 
 import org.junit.Before;
@@ -129,6 +130,24 @@ public class CryptoClientTest {
                 .subscribe(
                         historical -> {
                             assertEquals("11648.85258765", historical.historical.get(0).priceUsd);
+                            result[0] = true;
+                            signal.countDown();
+                        },
+                        throwable -> signal.countDown()
+                );
+        signal.await();
+        assertTrue(result[0]);
+    }
+
+    @Test
+    public void testAddCoinToPortfolio() throws Exception {
+        final CountDownLatch signal = new CountDownLatch(1);
+        final boolean[] result = {false};
+        cryptoClient.addCoinToPortfolio("", "", new TradeRequest())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(
+                        () -> {
                             result[0] = true;
                             signal.countDown();
                         },
