@@ -42,7 +42,7 @@ public final class RouterHelper {
     private boolean animate;
 
     @Inject
-    RouterHelper() {}
+    public RouterHelper() {}
 
     void route(Activity activity, Class<?> clazz) {
         if (activity == null || clazz == null) {
