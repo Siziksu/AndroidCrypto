@@ -3,6 +3,7 @@ package com.siziksu.crypto.presenter.portfolio;
 import com.siziksu.crypto.common.managers.ThrowableManager;
 import com.siziksu.crypto.common.managers.model.Info;
 import com.siziksu.crypto.data.RepositoryContract;
+import com.siziksu.crypto.data.model.CoinDataModel;
 import com.siziksu.crypto.presenter.mapper.PortfolioCoinMapper;
 import com.siziksu.crypto.ui.model.PortfolioCoin;
 
@@ -61,15 +62,25 @@ public class PortfolioPresenter implements PortfolioPresenterContract<PortfolioV
 
     private void addTheMissingValuesForTheCoinsAndShowPortfolio(List<PortfolioCoin> portfolioCoins) {
         List<Single<?>> singles = new ArrayList<>();
+        getCoinsAndAddMissingValues(portfolioCoins, singles);
+        waitForAllTheChangesAndShowPortfolio(portfolioCoins, singles);
+    }
+
+    private void getCoinsAndAddMissingValues(List<PortfolioCoin> portfolioCoins, List<Single<?>> singles) {
         for (PortfolioCoin portfolioCoin : portfolioCoins) {
             singles.add(repository.getCoin(portfolioCoin.coinId)
                                 .subscribeOn(Schedulers.io())
-                                .doOnSuccess(coin -> {
-                                    portfolioCoin.name = coin.name;
-                                    portfolioCoin.symbol = coin.symbol;
-                                    portfolioCoin.price = coin.priceUsd;
-                                }));
+                                .doOnSuccess(coin -> addTheMissingValues(portfolioCoin, coin)));
         }
+    }
+
+    private void addTheMissingValues(PortfolioCoin portfolioCoin, CoinDataModel coin) {
+        portfolioCoin.name = coin.name;
+        portfolioCoin.symbol = coin.symbol;
+        portfolioCoin.price = coin.priceUsd;
+    }
+
+    private void waitForAllTheChangesAndShowPortfolio(List<PortfolioCoin> portfolioCoins, List<Single<?>> singles) {
         cancelLastRequest();
         disposable = SingleSubject.zip(singles, coin -> coin)
                 .observeOn(AndroidSchedulers.mainThread())

@@ -55,24 +55,7 @@ public class MainPresenter implements MainPresenterContract<MainViewContract> {
                                 view.hideLoadingDialog();
                             }
                         },
-                        throwable -> {
-                            Info error = ThrowableManager.handleException(throwable);
-                            String message;
-                            switch (error.id) {
-                                case ThrowableManager.PERSISTENCE_COINS_NULL:
-                                case ThrowableManager.UNKNOWN_HOST_EXCEPTION:
-                                case ThrowableManager.CONNECTION_EXCEPTION:
-                                    message = ThrowableManager.CONNECTION_EXCEPTION_INFO.info;
-                                    break;
-                                default:
-                                    message = ThrowableManager.GENERIC_EXCEPTION_INFO.info;
-                                    break;
-                            }
-                            if (view != null) {
-                                view.showMessage(message);
-                                view.hideLoadingDialog();
-                            }
-                        }
+                        this::showError
                 );
     }
 
@@ -87,6 +70,25 @@ public class MainPresenter implements MainPresenterContract<MainViewContract> {
     public void onMenuPortfolioClick() {
         if (view != null) {
             router.goToPortfolio(view.getAppCompatActivity());
+        }
+    }
+
+    private void showError(Throwable throwable) {
+        Info error = ThrowableManager.handleException(throwable);
+        String message;
+        switch (error.id) {
+            case ThrowableManager.PERSISTENCE_COINS_NULL:
+            case ThrowableManager.UNKNOWN_HOST_EXCEPTION:
+            case ThrowableManager.CONNECTION_EXCEPTION:
+                message = ThrowableManager.CONNECTION_EXCEPTION_INFO.info;
+                break;
+            default:
+                message = ThrowableManager.GENERIC_EXCEPTION_INFO.info;
+                break;
+        }
+        if (view != null) {
+            view.showMessage(message);
+            view.hideLoadingDialog();
         }
     }
 

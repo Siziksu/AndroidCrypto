@@ -1,12 +1,8 @@
 package com.siziksu.crypto.presenter.detail;
 
-import android.graphics.Color;
 import android.util.Log;
 
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.siziksu.crypto.R;
 import com.siziksu.crypto.common.Constants;
 import com.siziksu.crypto.common.managers.ThrowableManager;
@@ -72,7 +68,7 @@ public class DetailPresenter implements DetailPresenterContract<DetailViewContra
                                 prepareLineChartAndSendDataToDraw();
                             }
                         },
-                        this::showHistoricalError
+                        this::showGetCoinHistoricalError
                 );
     }
 
@@ -102,7 +98,7 @@ public class DetailPresenter implements DetailPresenterContract<DetailViewContra
                                 view.showMessage(view.getAppCompatActivity().getString(R.string.trade_completed));
                             }
                         },
-                        this::showPortfolioError
+                        this::showAddCoinToPortfolioError
                 );
     }
 
@@ -116,37 +112,18 @@ public class DetailPresenter implements DetailPresenterContract<DetailViewContra
     }
 
     private void prepareLineChartAndSendDataToDraw() {
-        List<Entry> dataSet1Values = getDataSetValues();
-        LineDataSet dataSet1 = getLineDataSet(dataSet1Values);
-        List<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(dataSet1);
-        LineData data = new LineData(dataSets);
+        String label = null;
+        if (view != null) {
+            label = view.getAppCompatActivity().getString(R.string.historical_data_of_the_price);
+        }
+        LineData data = new LineChartHelper().buildAndGetTheLineDataForTheLineChart(label, coinsHistorical);
         if (view != null) {
             view.drawDataInTheLineChart(data);
             view.hideLoadingDialog();
         }
     }
 
-    private List<Entry> getDataSetValues() {
-        List<Entry> dataSet1Values = new ArrayList<>();
-        for (int i = 0; i < coinsHistorical.size(); i++) {
-            dataSet1Values.add(new Entry(i, Float.valueOf(coinsHistorical.get(i).priceUsd)));
-        }
-        return dataSet1Values;
-    }
-
-    private LineDataSet getLineDataSet(List<Entry> dataSet1Values) {
-        String label = "Historical data of the price (USD)";
-        if (view != null) {
-            label = view.getAppCompatActivity().getString(R.string.historical_data_of_the_price);
-        }
-        LineDataSet dataSet1 = new LineDataSet(dataSet1Values, label);
-        dataSet1.setColor(Color.RED);
-        dataSet1.setCircleColor(Color.RED);
-        return dataSet1;
-    }
-
-    private void showHistoricalError(Throwable throwable) {
+    private void showGetCoinHistoricalError(Throwable throwable) {
         Info error = ThrowableManager.handleException(throwable);
         String message;
         switch (error.id) {
@@ -165,7 +142,7 @@ public class DetailPresenter implements DetailPresenterContract<DetailViewContra
         }
     }
 
-    private void showPortfolioError(Throwable throwable) {
+    private void showAddCoinToPortfolioError(Throwable throwable) {
         Log.e(Constants.TAG, throwable.getMessage(), throwable);
         Info error = ThrowableManager.handleException(throwable);
         String message;
