@@ -1,15 +1,16 @@
 package com.siziksu.crypto.data;
 
-import android.support.test.runner.AndroidJUnit4;
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 
 import com.siziksu.crypto.data.client.CryptoClient;
-import com.siziksu.crypto.data.client.CryptoClientContract;
-import com.siziksu.crypto.data.client.model.TradeRequest;
+import com.siziksu.crypto.data.mock.ConnectionManagerMock;
 import com.siziksu.crypto.data.mock.CryptoServiceMock;
+import com.siziksu.crypto.data.mock.PersistenceClientMock;
+import com.siziksu.crypto.data.model.TradeDataModel;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -18,26 +19,28 @@ import io.reactivex.schedulers.Schedulers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
-public class CryptoClientTest {
+public class RepositoryTest {
 
-    private CryptoClientContract cryptoClient;
+    private RepositoryContract repository;
 
     @Before
     public void setUp() {
-        cryptoClient = new CryptoClient(new CryptoServiceMock());
+        Context context = InstrumentationRegistry.getTargetContext();
+        repository = new Repository(context, new ConnectionManagerMock(), new PersistenceClientMock(), new CryptoClient(new CryptoServiceMock()));
     }
 
     @Test
     public void testGetCoins() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoins()
+        repository.getCoins()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
                         coins -> {
-                            result[0] = true;
+                            if (!coins.isEmpty()) {
+                                result[0] = true;
+                            }
                             signal.countDown();
                         },
                         throwable -> signal.countDown()
@@ -50,12 +53,12 @@ public class CryptoClientTest {
     public void testGetCoinsAndCheckSixthIsCardano() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoins()
+        repository.getCoins()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
                         coins -> {
-                            assertEquals("Cardano", coins.data.get(5).name);
+                            assertEquals("Cardano", coins.get(5).name);
                             result[0] = true;
                             signal.countDown();
                         },
@@ -69,7 +72,7 @@ public class CryptoClientTest {
     public void testGetCoin() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoin(1)
+        repository.getCoin(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -87,7 +90,7 @@ public class CryptoClientTest {
     public void testGetCoinOneAndCheckName() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoin(1)
+        repository.getCoin(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -106,7 +109,7 @@ public class CryptoClientTest {
     public void testGetHistorical() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoinHistorical(1)
+        repository.getCoinHistorical(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -124,12 +127,12 @@ public class CryptoClientTest {
     public void testGetHistoricalAndCheckFirstPrice() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoinHistorical(1)
+        repository.getCoinHistorical(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
                         historical -> {
-                            assertEquals("11648.85258765", historical.historical.get(0).priceUsd);
+                            assertEquals("11648.85258765", historical.get(0).priceUsd);
                             result[0] = true;
                             signal.countDown();
                         },
@@ -143,7 +146,7 @@ public class CryptoClientTest {
     public void testPortfolio() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getPortfolio("", "")
+        repository.getPortfolio("", "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -161,12 +164,12 @@ public class CryptoClientTest {
     public void testPortfolioAndCheckPortfolioIsEmpty() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getPortfolio("", "")
+        repository.getPortfolio("", "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
                         portfolioTrades -> {
-                            assertTrue(portfolioTrades.coins.isEmpty());
+                            assertTrue(portfolioTrades.isEmpty());
                             result[0] = true;
                             signal.countDown();
                         },
@@ -180,7 +183,7 @@ public class CryptoClientTest {
     public void testAddCoinToPortfolio() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.addCoinToPortfolio("", "", new TradeRequest())
+        repository.addCoinToPortfolio("", "", new TradeDataModel())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(

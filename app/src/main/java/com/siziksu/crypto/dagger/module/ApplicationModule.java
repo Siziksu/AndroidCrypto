@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.siziksu.crypto.App;
 import com.siziksu.crypto.common.managers.ConnectionManager;
+import com.siziksu.crypto.common.managers.ConnectionManagerContract;
+import com.siziksu.crypto.ui.router.Router;
+import com.siziksu.crypto.ui.router.RouterContract;
+import com.siziksu.crypto.ui.router.RouterHelper;
 import com.siziksu.crypto.ui.view.main.CoinsAdapter;
 import com.siziksu.crypto.ui.view.main.CoinsAdapterContract;
 import com.siziksu.crypto.ui.view.main.CoinsManager;
@@ -12,9 +16,6 @@ import com.siziksu.crypto.ui.view.portfolio.PortfolioAdapter;
 import com.siziksu.crypto.ui.view.portfolio.PortfolioAdapterContract;
 import com.siziksu.crypto.ui.view.portfolio.PortfolioManager;
 import com.siziksu.crypto.ui.view.portfolio.PortfolioManagerContract;
-import com.siziksu.crypto.ui.router.Router;
-import com.siziksu.crypto.ui.router.RouterContract;
-import com.siziksu.crypto.ui.router.RouterHelper;
 
 import javax.inject.Singleton;
 
@@ -37,7 +38,7 @@ public final class ApplicationModule {
 
     @Singleton
     @Provides
-    ConnectionManager providesConnectionManager(Context context) {
+    ConnectionManagerContract providesConnectionManager(Context context) {
         return new ConnectionManager(context);
     }
 

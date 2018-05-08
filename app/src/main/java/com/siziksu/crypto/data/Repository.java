@@ -2,7 +2,7 @@ package com.siziksu.crypto.data;
 
 import android.content.Context;
 
-import com.siziksu.crypto.common.managers.ConnectionManager;
+import com.siziksu.crypto.common.managers.ConnectionManagerContract;
 import com.siziksu.crypto.data.client.CryptoClientContract;
 import com.siziksu.crypto.data.mapper.client.CoinMapper;
 import com.siziksu.crypto.data.mapper.client.HistoricalMapper;
@@ -25,14 +25,14 @@ public class Repository implements RepositoryContract {
     @Inject
     Context context;
     @Inject
-    ConnectionManager connectionManager;
+    ConnectionManagerContract connectionManager;
     @Inject
     PersistenceClientContract persistenceClient;
     @Inject
     CryptoClientContract cryptoClient;
 
     public Repository(Context context,
-                      ConnectionManager connectionManager,
+                      ConnectionManagerContract connectionManager,
                       PersistenceClientContract persistenceClient,
                       CryptoClientContract cryptoClient) {
         this.context = context;

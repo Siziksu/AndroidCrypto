@@ -13,7 +13,7 @@ import javax.inject.Inject;
 /**
  * Class used to manage the connection.
  */
-public final class ConnectionManager {
+public final class ConnectionManager implements ConnectionManagerContract {
 
     @Inject
     Context context;
@@ -22,6 +22,7 @@ public final class ConnectionManager {
         this.context = context;
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public Connection getConnection() {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

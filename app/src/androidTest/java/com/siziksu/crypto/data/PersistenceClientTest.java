@@ -2,10 +2,8 @@ package com.siziksu.crypto.data;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.siziksu.crypto.data.client.CryptoClient;
-import com.siziksu.crypto.data.client.CryptoClientContract;
-import com.siziksu.crypto.data.client.model.TradeRequest;
-import com.siziksu.crypto.data.mock.CryptoServiceMock;
+import com.siziksu.crypto.data.mock.PersistenceClientMock;
+import com.siziksu.crypto.data.persistence.PersistenceClientContract;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,25 +17,27 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class CryptoClientTest {
+public class PersistenceClientTest {
 
-    private CryptoClientContract cryptoClient;
+    private PersistenceClientContract persistenceClientMock;
 
     @Before
     public void setUp() {
-        cryptoClient = new CryptoClient(new CryptoServiceMock());
+        persistenceClientMock = new PersistenceClientMock();
     }
 
     @Test
     public void testGetCoins() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoins()
+        persistenceClientMock.getCoins()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
                         coins -> {
-                            result[0] = true;
+                            if (!coins.data.isEmpty()) {
+                                result[0] = true;
+                            }
                             signal.countDown();
                         },
                         throwable -> signal.countDown()
@@ -50,7 +50,7 @@ public class CryptoClientTest {
     public void testGetCoinsAndCheckSixthIsCardano() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoins()
+        persistenceClientMock.getCoins()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -69,7 +69,7 @@ public class CryptoClientTest {
     public void testGetCoin() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoin(1)
+        persistenceClientMock.getCoin(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -87,7 +87,7 @@ public class CryptoClientTest {
     public void testGetCoinOneAndCheckName() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoin(1)
+        persistenceClientMock.getCoin(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -106,7 +106,7 @@ public class CryptoClientTest {
     public void testGetHistorical() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoinHistorical(1)
+        persistenceClientMock.getCoinHistorical(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -124,7 +124,7 @@ public class CryptoClientTest {
     public void testGetHistoricalAndCheckFirstPrice() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getCoinHistorical(1)
+        persistenceClientMock.getCoinHistorical(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -143,7 +143,7 @@ public class CryptoClientTest {
     public void testPortfolio() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getPortfolio("", "")
+        persistenceClientMock.getPortfolio()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
@@ -161,30 +161,12 @@ public class CryptoClientTest {
     public void testPortfolioAndCheckPortfolioIsEmpty() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         final boolean[] result = {false};
-        cryptoClient.getPortfolio("", "")
+        persistenceClientMock.getPortfolio()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
                         portfolioTrades -> {
                             assertTrue(portfolioTrades.coins.isEmpty());
-                            result[0] = true;
-                            signal.countDown();
-                        },
-                        throwable -> signal.countDown()
-                );
-        signal.await();
-        assertTrue(result[0]);
-    }
-
-    @Test
-    public void testAddCoinToPortfolio() throws Exception {
-        final CountDownLatch signal = new CountDownLatch(1);
-        final boolean[] result = {false};
-        cryptoClient.addCoinToPortfolio("", "", new TradeRequest())
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(
-                        () -> {
                             result[0] = true;
                             signal.countDown();
                         },

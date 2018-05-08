@@ -2,7 +2,7 @@ package com.siziksu.crypto.dagger.module;
 
 import android.content.Context;
 
-import com.siziksu.crypto.common.managers.ConnectionManager;
+import com.siziksu.crypto.common.managers.ConnectionManagerContract;
 import com.siziksu.crypto.data.Repository;
 import com.siziksu.crypto.data.RepositoryContract;
 import com.siziksu.crypto.data.client.CryptoClient;
@@ -23,7 +23,7 @@ public final class DataModule {
     @Singleton
     @Provides
     RepositoryContract providesRepository(Context context,
-                                          ConnectionManager connectionManager,
+                                          ConnectionManagerContract connectionManager,
                                           PersistenceClientContract persistenceClient,
                                           CryptoClientContract cryptoClient) {
         return new Repository(context, connectionManager, persistenceClient, cryptoClient);
