@@ -1,40 +1,48 @@
 package com.siziksu.crypto.presenter.mapper;
 
 import com.siziksu.crypto.common.mapper.Mapper;
-import com.siziksu.crypto.data.model.PortfolioCoinDataModel;
-import com.siziksu.crypto.ui.model.PortfolioCoin;
+import com.siziksu.crypto.domain.model.PortfolioCoinDomainModel;
+import com.siziksu.crypto.presenter.model.PortfolioCoin;
 
-public class PortfolioCoinMapper extends Mapper<PortfolioCoinDataModel, PortfolioCoin> {
+public class PortfolioCoinMapper extends Mapper<PortfolioCoinDomainModel, PortfolioCoin> {
 
     @Override
-    public PortfolioCoin map(PortfolioCoinDataModel portfolioCoinDataModel) {
+    public PortfolioCoin map(PortfolioCoinDomainModel object) {
         PortfolioCoin portfolioCoin = new PortfolioCoin();
-        portfolioCoin.coinId = portfolioCoinDataModel.coinId;
-        portfolioCoin.amount = portfolioCoinDataModel.amount;
-        portfolioCoin.priceUsd = portfolioCoinDataModel.priceUsd;
-        portfolioCoin.userId = portfolioCoinDataModel.userId;
-        portfolioCoin.totalUsd = portfolioCoinDataModel.totalUsd;
-        portfolioCoin.notes = portfolioCoinDataModel.notes;
-        portfolioCoin.id = portfolioCoinDataModel.id;
-        portfolioCoin.createdAt = portfolioCoinDataModel.createdAt;
-        portfolioCoin.updatedAt = portfolioCoinDataModel.updatedAt;
-        portfolioCoin.tradedAt = portfolioCoinDataModel.tradedAt;
+        portfolioCoin.coinId = object.coinId;
+        portfolioCoin.amount = object.amount;
+        portfolioCoin.priceUsd = object.priceUsd;
+        portfolioCoin.userId = object.userId;
+        portfolioCoin.totalUsd = object.totalUsd;
+        portfolioCoin.notes = object.notes;
+        portfolioCoin.id = object.id;
+        portfolioCoin.createdAt = object.createdAt;
+        portfolioCoin.updatedAt = object.updatedAt;
+        portfolioCoin.tradedAt = object.tradedAt;
+
+        portfolioCoin.name = object.name;
+        portfolioCoin.symbol = object.symbol;
+        portfolioCoin.price = object.price;
         return portfolioCoin;
     }
 
     @Override
-    public PortfolioCoinDataModel unMap(PortfolioCoin portfolioCoin) {
-        PortfolioCoinDataModel portfolioCoinDataModel = new PortfolioCoinDataModel();
-        portfolioCoinDataModel.coinId = portfolioCoin.coinId;
-        portfolioCoinDataModel.amount = portfolioCoin.amount;
-        portfolioCoinDataModel.priceUsd = portfolioCoin.priceUsd;
-        portfolioCoinDataModel.userId = portfolioCoin.userId;
-        portfolioCoinDataModel.totalUsd = portfolioCoin.totalUsd;
-        portfolioCoinDataModel.notes = portfolioCoin.notes;
-        portfolioCoinDataModel.id = portfolioCoin.id;
-        portfolioCoinDataModel.createdAt = portfolioCoin.createdAt;
-        portfolioCoinDataModel.updatedAt = portfolioCoin.updatedAt;
-        portfolioCoinDataModel.tradedAt = portfolioCoin.tradedAt;
-        return portfolioCoinDataModel;
+    public PortfolioCoinDomainModel unMap(PortfolioCoin mapped) {
+        PortfolioCoinDomainModel portfolioCoinDomainModel = new PortfolioCoinDomainModel();
+        portfolioCoinDomainModel.coinId = mapped.coinId;
+        portfolioCoinDomainModel.amount = mapped.amount;
+        portfolioCoinDomainModel.priceUsd = mapped.priceUsd;
+        portfolioCoinDomainModel.userId = mapped.userId;
+        portfolioCoinDomainModel.totalUsd = mapped.totalUsd;
+        portfolioCoinDomainModel.notes = mapped.notes;
+        portfolioCoinDomainModel.id = mapped.id;
+        portfolioCoinDomainModel.createdAt = mapped.createdAt;
+        portfolioCoinDomainModel.updatedAt = mapped.updatedAt;
+        portfolioCoinDomainModel.tradedAt = mapped.tradedAt;
+
+        portfolioCoinDomainModel.name = mapped.name;
+        portfolioCoinDomainModel.symbol = mapped.symbol;
+        portfolioCoinDomainModel.price = mapped.price;
+        return portfolioCoinDomainModel;
     }
 }

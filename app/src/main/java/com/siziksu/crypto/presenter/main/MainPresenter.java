@@ -1,62 +1,45 @@
 package com.siziksu.crypto.presenter.main;
 
-import com.siziksu.crypto.common.managers.ThrowableManager;
-import com.siziksu.crypto.common.managers.model.Info;
-import com.siziksu.crypto.data.RepositoryContract;
+import com.siziksu.crypto.domain.main.MainDomainContract;
+import com.siziksu.crypto.domain.main.MainDomainPresenterContract;
+import com.siziksu.crypto.domain.model.CoinDomainModel;
 import com.siziksu.crypto.presenter.mapper.CoinMapper;
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 import com.siziksu.crypto.ui.router.RouterContract;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+public class MainPresenter implements MainPresenterContract<MainViewContract>, MainDomainPresenterContract {
 
-public class MainPresenter implements MainPresenterContract<MainViewContract> {
-
-    @Inject
-    RepositoryContract repository;
     @Inject
     RouterContract router;
+    @Inject
+    MainDomainContract<MainDomainPresenterContract> domain;
 
     private MainViewContract view;
-    private Disposable disposable;
 
-    public MainPresenter(RouterContract router, RepositoryContract repository) {
+    public MainPresenter(RouterContract router, MainDomainContract<MainDomainPresenterContract> domain) {
         this.router = router;
-        this.repository = repository;
+        this.domain = domain;
     }
 
     @Override
     public void register(MainViewContract view) {
         this.view = view;
+        domain.register(this);
     }
 
     @Override
     public void unregister() {
         view = null;
-        cancelLastRequest();
+        domain.unregister();
     }
 
     @Override
     public void start() {
-        if (view != null) {
-            view.showLoadingDialog();
-        }
-        cancelLastRequest();
-        disposable = repository.getCoins()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        coinsDataModel -> {
-                            if (view != null) {
-                                view.showCoinList(new CoinMapper().map(coinsDataModel));
-                                view.hideLoadingDialog();
-                            }
-                        },
-                        this::showError
-                );
+        domain.start();
     }
 
     @Override
@@ -73,29 +56,31 @@ public class MainPresenter implements MainPresenterContract<MainViewContract> {
         }
     }
 
-    private void showError(Throwable throwable) {
-        Info error = ThrowableManager.handleException(throwable);
-        String message;
-        switch (error.id) {
-            case ThrowableManager.PERSISTENCE_COINS_NULL:
-            case ThrowableManager.UNKNOWN_HOST_EXCEPTION:
-            case ThrowableManager.CONNECTION_EXCEPTION:
-                message = ThrowableManager.CONNECTION_EXCEPTION_INFO.info;
-                break;
-            default:
-                message = ThrowableManager.GENERIC_EXCEPTION_INFO.info;
-                break;
-        }
+    @Override
+    public void showLoadingDialog() {
         if (view != null) {
-            view.showMessage(message);
+            view.showLoadingDialog();
+        }
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        if (view != null) {
             view.hideLoadingDialog();
         }
     }
 
-    private void cancelLastRequest() {
-        if (disposable != null) {
-            disposable.dispose();
-            disposable = null;
+    @Override
+    public void showCoinList(List<CoinDomainModel> list) {
+        if (view != null) {
+            view.showCoinList(new CoinMapper().map(list));
+        }
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if (view != null) {
+            view.showMessage(message);
         }
     }
 }

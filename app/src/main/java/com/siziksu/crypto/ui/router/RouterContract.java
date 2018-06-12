@@ -3,7 +3,7 @@ package com.siziksu.crypto.ui.router;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 
 public interface RouterContract {
 

@@ -1,9 +1,9 @@
-package com.siziksu.crypto.ui.model;
+package com.siziksu.crypto.domain.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Coin implements Parcelable {
+public class CoinDomainModel implements Parcelable {
 
     public int id;
     public String name;
@@ -22,7 +22,7 @@ public class Coin implements Parcelable {
     public String createdAt;
     public String updatedAt;
 
-    public Coin() {}
+    public CoinDomainModel() {}
 
     @Override
     public int describeContents() { return 0; }
@@ -47,7 +47,7 @@ public class Coin implements Parcelable {
         dest.writeString(this.updatedAt);
     }
 
-    protected Coin(Parcel in) {
+    protected CoinDomainModel(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();
         this.symbol = in.readString();
@@ -66,11 +66,11 @@ public class Coin implements Parcelable {
         this.updatedAt = in.readString();
     }
 
-    public static final Creator<Coin> CREATOR = new Creator<Coin>() {
+    public static final Creator<CoinDomainModel> CREATOR = new Creator<CoinDomainModel>() {
         @Override
-        public Coin createFromParcel(Parcel source) {return new Coin(source);}
+        public CoinDomainModel createFromParcel(Parcel source) {return new CoinDomainModel(source);}
 
         @Override
-        public Coin[] newArray(int size) {return new Coin[size];}
+        public CoinDomainModel[] newArray(int size) {return new CoinDomainModel[size];}
     };
 }

@@ -6,6 +6,7 @@ import com.siziksu.crypto.dagger.component.ApplicationComponent;
 import com.siziksu.crypto.dagger.component.DaggerApplicationComponent;
 import com.siziksu.crypto.dagger.module.ApplicationModule;
 import com.siziksu.crypto.dagger.module.DataModule;
+import com.siziksu.crypto.dagger.module.DomainModule;
 import com.siziksu.crypto.dagger.module.PresenterModule;
 
 import io.realm.Realm;
@@ -44,6 +45,7 @@ public class App extends Application {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .dataModule(new DataModule())
+                .domainModule(new DomainModule())
                 .presenterModule(new PresenterModule())
                 .build();
         applicationComponent.inject(this);

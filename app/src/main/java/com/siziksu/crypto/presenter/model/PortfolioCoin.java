@@ -1,4 +1,4 @@
-package com.siziksu.crypto.ui.model;
+package com.siziksu.crypto.presenter.model;
 
 public class PortfolioCoin {
 

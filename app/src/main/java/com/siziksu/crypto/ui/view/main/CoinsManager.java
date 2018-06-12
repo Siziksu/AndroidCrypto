@@ -3,7 +3,7 @@ package com.siziksu.crypto.ui.view.main;
 import android.util.Log;
 
 import com.siziksu.crypto.common.Constants;
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,12 @@
 package com.siziksu.crypto.dagger.module;
 
 import com.siziksu.crypto.data.RepositoryContract;
+import com.siziksu.crypto.domain.detail.DetailDomainContract;
+import com.siziksu.crypto.domain.detail.DetailDomainPresenterContract;
+import com.siziksu.crypto.domain.main.MainDomainContract;
+import com.siziksu.crypto.domain.main.MainDomainPresenterContract;
+import com.siziksu.crypto.domain.portfolio.PortfolioDomainContract;
+import com.siziksu.crypto.domain.portfolio.PortfolioDomainPresenterContract;
 import com.siziksu.crypto.presenter.detail.DetailPresenter;
 import com.siziksu.crypto.presenter.detail.DetailPresenterContract;
 import com.siziksu.crypto.presenter.detail.DetailViewContract;
@@ -22,19 +28,20 @@ public final class PresenterModule {
 
     @Singleton
     @Provides
-    MainPresenterContract<MainViewContract> providesMainPresenter(RouterContract router, RepositoryContract repository) {
-        return new MainPresenter(router, repository);
+    MainPresenterContract<MainViewContract> providesMainPresenter(RouterContract router,
+                                                                  MainDomainContract<MainDomainPresenterContract> domain) {
+        return new MainPresenter(router, domain);
     }
 
     @Singleton
     @Provides
-    DetailPresenterContract<DetailViewContract> providesDetailPresenter(RepositoryContract repository) {
-        return new DetailPresenter(repository);
+    DetailPresenterContract<DetailViewContract> providesDetailPresenter(DetailDomainContract<DetailDomainPresenterContract> domain) {
+        return new DetailPresenter(domain);
     }
 
     @Singleton
     @Provides
-    PortfolioPresenterContract<PortfolioViewContract> providesPortfolioPresenter(RepositoryContract repository) {
-        return new PortfolioPresenter(repository);
+    PortfolioPresenterContract<PortfolioViewContract> providesPortfolioPresenter(PortfolioDomainContract<PortfolioDomainPresenterContract> domain) {
+        return new PortfolioPresenter(domain);
     }
 }

@@ -1,52 +1,52 @@
 package com.siziksu.crypto.presenter.mapper;
 
 import com.siziksu.crypto.common.mapper.Mapper;
-import com.siziksu.crypto.data.model.CoinDataModel;
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.domain.model.CoinDomainModel;
+import com.siziksu.crypto.presenter.model.Coin;
 
-public class CoinMapper extends Mapper<CoinDataModel, Coin> {
+public class CoinMapper extends Mapper<CoinDomainModel, Coin> {
 
     @Override
-    public Coin map(CoinDataModel coinDataModel) {
+    public Coin map(CoinDomainModel object) {
         Coin coin = new Coin();
-        coin.id = coinDataModel.id;
-        coin.name = coinDataModel.name;
-        coin.symbol = coinDataModel.symbol;
-        coin.logo = coinDataModel.logo;
-        coin.rank = coinDataModel.rank;
-        coin.priceUsd = coinDataModel.priceUsd;
-        coin.priceBtc = coinDataModel.priceBtc;
-        coin.volumeUsd24h = coinDataModel.volumeUsd24h;
-        coin.marketCapUsd = coinDataModel.marketCapUsd;
-        coin.availableSupply = coinDataModel.availableSupply;
-        coin.totalSupply = coinDataModel.totalSupply;
-        coin.percentChange1h = coinDataModel.percentChange1h;
-        coin.percentChange24h = coinDataModel.percentChange24h;
-        coin.percentChange7d = coinDataModel.percentChange7d;
-        coin.createdAt = coinDataModel.createdAt;
-        coin.updatedAt = coinDataModel.updatedAt;
+        coin.id = object.id;
+        coin.name = object.name;
+        coin.symbol = object.symbol;
+        coin.logo = object.logo;
+        coin.rank = object.rank;
+        coin.priceUsd = object.priceUsd;
+        coin.priceBtc = object.priceBtc;
+        coin.volumeUsd24h = object.volumeUsd24h;
+        coin.marketCapUsd = object.marketCapUsd;
+        coin.availableSupply = object.availableSupply;
+        coin.totalSupply = object.totalSupply;
+        coin.percentChange1h = object.percentChange1h;
+        coin.percentChange24h = object.percentChange24h;
+        coin.percentChange7d = object.percentChange7d;
+        coin.createdAt = object.createdAt;
+        coin.updatedAt = object.updatedAt;
         return coin;
     }
 
     @Override
-    public CoinDataModel unMap(Coin coin) {
-        CoinDataModel coinDataModel = new CoinDataModel();
-        coinDataModel.id = coin.id;
-        coinDataModel.name = coin.name;
-        coinDataModel.symbol = coin.symbol;
-        coinDataModel.logo = coin.logo;
-        coinDataModel.rank = coin.rank;
-        coinDataModel.priceUsd = coin.priceUsd;
-        coinDataModel.priceBtc = coin.priceBtc;
-        coinDataModel.volumeUsd24h = coin.volumeUsd24h;
-        coinDataModel.marketCapUsd = coin.marketCapUsd;
-        coinDataModel.availableSupply = coin.availableSupply;
-        coinDataModel.totalSupply = coin.totalSupply;
-        coinDataModel.percentChange1h = coin.percentChange1h;
-        coinDataModel.percentChange24h = coin.percentChange24h;
-        coinDataModel.percentChange7d = coin.percentChange7d;
-        coinDataModel.createdAt = coin.createdAt;
-        coinDataModel.updatedAt = coin.updatedAt;
-        return coinDataModel;
+    public CoinDomainModel unMap(Coin mapped) {
+        CoinDomainModel coinDomainModel = new CoinDomainModel();
+        coinDomainModel.id = mapped.id;
+        coinDomainModel.name = mapped.name;
+        coinDomainModel.symbol = mapped.symbol;
+        coinDomainModel.logo = mapped.logo;
+        coinDomainModel.rank = mapped.rank;
+        coinDomainModel.priceUsd = mapped.priceUsd;
+        coinDomainModel.priceBtc = mapped.priceBtc;
+        coinDomainModel.volumeUsd24h = mapped.volumeUsd24h;
+        coinDomainModel.marketCapUsd = mapped.marketCapUsd;
+        coinDomainModel.availableSupply = mapped.availableSupply;
+        coinDomainModel.totalSupply = mapped.totalSupply;
+        coinDomainModel.percentChange1h = mapped.percentChange1h;
+        coinDomainModel.percentChange24h = mapped.percentChange24h;
+        coinDomainModel.percentChange7d = mapped.percentChange7d;
+        coinDomainModel.createdAt = mapped.createdAt;
+        coinDomainModel.updatedAt = mapped.updatedAt;
+        return coinDomainModel;
     }
 }

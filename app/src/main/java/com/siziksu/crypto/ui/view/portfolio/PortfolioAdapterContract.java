@@ -2,7 +2,7 @@ package com.siziksu.crypto.ui.view.portfolio;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.siziksu.crypto.ui.model.PortfolioCoin;
+import com.siziksu.crypto.presenter.model.PortfolioCoin;
 
 import java.util.List;
 
@@ -10,13 +10,11 @@ public interface PortfolioAdapterContract {
 
     void init();
 
-    PortfolioCoin getItem(int position);
+    void notifyDataSetChanged();
 
     RecyclerView.LayoutManager getLayoutManager();
 
-    void showItems(List<PortfolioCoin> list);
-
     RecyclerView.Adapter getAdapter();
 
-    void notifyDataSetChanged();
+    void showItems(List<PortfolioCoin> list);
 }

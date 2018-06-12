@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.siziksu.crypto.R;
 import com.siziksu.crypto.common.utils.MathUtils;
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 
 import java.util.List;
 

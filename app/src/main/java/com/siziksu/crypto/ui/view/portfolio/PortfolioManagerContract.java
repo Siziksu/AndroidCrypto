@@ -1,6 +1,6 @@
 package com.siziksu.crypto.ui.view.portfolio;
 
-import com.siziksu.crypto.ui.model.PortfolioCoin;
+import com.siziksu.crypto.presenter.model.PortfolioCoin;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@ import com.siziksu.crypto.presenter.portfolio.PortfolioPresenterContract;
 import com.siziksu.crypto.presenter.portfolio.PortfolioViewContract;
 import com.siziksu.crypto.ui.common.DialogFragmentHelper;
 import com.siziksu.crypto.ui.common.SnackbarHelper;
-import com.siziksu.crypto.ui.model.PortfolioCoin;
+import com.siziksu.crypto.presenter.model.PortfolioCoin;
 
 import java.util.List;
 

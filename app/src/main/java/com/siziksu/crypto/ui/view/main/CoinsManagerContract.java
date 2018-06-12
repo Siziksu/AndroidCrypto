@@ -1,6 +1,6 @@
 package com.siziksu.crypto.ui.view.main;
 
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 
 import java.util.List;
 

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.siziksu.crypto.R;
 import com.siziksu.crypto.common.utils.MathUtils;
-import com.siziksu.crypto.ui.model.PortfolioCoin;
+import com.siziksu.crypto.presenter.model.PortfolioCoin;
 
 import java.util.List;
 
@@ -58,22 +58,17 @@ public final class PortfolioAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public PortfolioCoin getItem(int position) {
-        return coinsManager.getItem(position);
-    }
-
-    @Override
     public LinearLayoutManager getLayoutManager() {
         return layoutManager;
     }
 
     @Override
-    public void showItems(List<PortfolioCoin> list) {
-        coinsManager.showItems(this, list);
+    public RecyclerView.Adapter getAdapter() {
+        return this;
     }
 
     @Override
-    public RecyclerView.Adapter getAdapter() {
-        return this;
+    public void showItems(List<PortfolioCoin> list) {
+        coinsManager.showItems(this, list);
     }
 }

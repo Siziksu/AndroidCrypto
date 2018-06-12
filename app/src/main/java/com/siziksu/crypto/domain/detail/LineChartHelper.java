@@ -1,4 +1,4 @@
-package com.siziksu.crypto.presenter.detail;
+package com.siziksu.crypto.domain.detail;
 
 import android.graphics.Color;
 
@@ -6,7 +6,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.siziksu.crypto.ui.model.CoinHistorical;
+import com.siziksu.crypto.domain.model.CoinHistoricalDomainModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 public class LineChartHelper {
 
-    public LineData buildAndGetTheLineDataForTheLineChart(@Nullable String label, List<CoinHistorical> coinsHistorical) {
+    public LineData buildAndGetTheLineDataForTheLineChart(@Nullable String label, List<CoinHistoricalDomainModel> coinsHistorical) {
         List<Entry> dataSet1Values = getDataSetValues(coinsHistorical);
         LineDataSet dataSet1 = getLineDataSet(label, dataSet1Values);
         List<ILineDataSet> dataSets = new ArrayList<>();
@@ -23,7 +23,7 @@ public class LineChartHelper {
         return new LineData(dataSets);
     }
 
-    private List<Entry> getDataSetValues(List<CoinHistorical> coinsHistorical) {
+    private List<Entry> getDataSetValues(List<CoinHistoricalDomainModel> coinsHistorical) {
         List<Entry> dataSet1Values = new ArrayList<>();
         for (int i = 0; i < coinsHistorical.size(); i++) {
             dataSet1Values.add(new Entry(i, Float.valueOf(coinsHistorical.get(i).priceUsd)));

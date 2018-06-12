@@ -17,7 +17,7 @@ import com.siziksu.crypto.presenter.detail.DetailPresenterContract;
 import com.siziksu.crypto.presenter.detail.DetailViewContract;
 import com.siziksu.crypto.ui.common.DialogFragmentHelper;
 import com.siziksu.crypto.ui.common.SnackbarHelper;
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 
 import javax.inject.Inject;
 

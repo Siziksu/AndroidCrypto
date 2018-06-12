@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.siziksu.crypto.R;
 import com.siziksu.crypto.common.Constants;
 import com.siziksu.crypto.ui.view.detail.DetailActivity;
-import com.siziksu.crypto.ui.model.Coin;
+import com.siziksu.crypto.presenter.model.Coin;
 import com.siziksu.crypto.ui.view.portfolio.PortfolioActivity;
 
 import javax.inject.Inject;
