@@ -20,9 +20,17 @@ The application uses a layered architecture (`ui`, `presenter`, `data`). Each la
 - `Calligraphy` for the font faces.
 - `MPAndroidChart` for the LineCharts.  
 
-## Art
+## Screenshots
 
-In the folder `art`, can be found some screenshots.
+![Screenshot](art/device-2018-05-08-114452.png)
+![Screenshot](art/device-2018-05-08-114522.png)
+![Screenshot](art/device-2018-05-08-114540.png)
+![Screenshot](art/device-2018-05-08-114553.png)
+![Screenshot](art/device-2018-05-08-114609.png)
+![Screenshot](art/device-2018-05-08-114625.png)
+![Screenshot](art/device-2018-05-08-114642.png)
+![Screenshot](art/device-2018-05-08-114721.png)
+![Screenshot](art/device-2018-05-08-114753.png)
 
 ## License
     Copyright 2018 Esteban Latre
